@@ -17,6 +17,8 @@ from kivy.config import Config
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
+import sqlite3 as sq
+
 Config.set('graphics','width','324')
 Config.set('graphics','height','576')
 
@@ -126,7 +128,14 @@ class TempScreen(Screen):
     
 
 class PracticeScreen(Screen):
-    testString = StringProperty('Hellooooooo')
+    testString = StringProperty()
+
+    def __init__(self, **kwargs):
+        super(Screen,self).__init__(**kwargs) 
+    
+        conn = sq.connect('turk_eng_db.sqlite')
+        
+        Clock.schedule_once(self.menuScreen2, 5)
     
     
 if __name__ == '__main__':
