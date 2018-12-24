@@ -19,6 +19,8 @@ from kivy.uix.widget import Widget
 
 import sqlite3 as sq
 
+from random import randint
+
 Config.set('graphics','width','324')
 Config.set('graphics','height','576')
 
@@ -128,14 +130,72 @@ class TempScreen(Screen):
     
 
 class PracticeScreen(Screen):
-    testString = StringProperty()
+
+    question = StringProperty()
+    answer_r = StringProperty()
+    answer_w1 = StringProperty()
+    answer_w2 = StringProperty()
+    answer_w3 = StringProperty()
+
 
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
     
-        conn = sq.connect('turk_eng_db.sqlite')
+        self.conn = sq.connect(r'C:\Users\CrunchyTiger\Desktop\kivy\Türkçe_Tavşanı\turkceApp\database\turk_eng_db.sqlite')
+
+        self.cursor = conn.cursor()
+
+        self.cursor.execute("SELECT max(ID) from TURK_ENG")
+
+        self.ID_full_range = range(1,cursor.fetchone()[0]+1)
+
+        self.get_question_answers()
+
+
+    def get_question_answers(self):
+
+        # select an ID for a question
+        question_ID = random.choice(self.ID_full_range)
+        # remove that ID from future selection
+        self.ID_full_range.remove(question_ID)
+        # temporary removal for this question
+        adjusted_range = self.ID_full_range.remove(self.question_ID)
+        # set one of the answers to the correct ID
+        answer_right_ID = question_ID
+        # select more random IDs for the wrong answers
+        wrong_answers_IDs = []
+        for IDs in range(3):
+            cur_wrong_ID = random.choice(adjusted_range)
+            wrong_answers_IDs.append = cur_wrong_ID
+            adjusted_range.remove(cur_wrong_ID)
         
-        Clock.schedule_once(self.menuScreen2, 5)
+        # get and set question text
+        self.cursor.execute("SELECT TURKISH FROM TURK_ENG WHERE ID = ?",(question_ID,))
+        for row in cursor:
+            self.question = row[0]
+
+        # get and set right answer text
+        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(answer_right_ID,))
+        for row in cursor:
+            self.answer_r = row[0]
+
+        # get and set right answer text
+        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[0],))
+        for row in cursor:
+            self.answer_w1 = row[0]
+
+        # get and set right answer text
+        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[1],))
+        for row in cursor:
+            self.answer_w2 = row[0]
+
+        # get and set right answer text
+        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[2],))
+        for row in cursor:
+            self.answer_w3 = row[0]
+
+
+
     
     
 if __name__ == '__main__':

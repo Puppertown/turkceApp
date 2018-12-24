@@ -21,6 +21,5 @@ for column in cursor:
 print(selection)
 
 
-
-
+print(cursor[0][0])
 
