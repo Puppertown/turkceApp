@@ -1,0 +1,283 @@
+#:kivy 1.10.1
+#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+
+<SplashScreen>
+	FloatLayout:
+		canvas:
+			Color:
+				rgba: 0.9294117,0.105882,0.14117647,1   #RGB: 237,27,36
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		Image:
+			source: 'turkce_bunny.png'
+			size_hint: 0.6, 0.6
+			pos_hint: {'center_y': 0.6, 'center_x': 0.5}
+		Image:
+			source: 'Capture2_25p.png'
+			size_hint: 0.8,0.8
+			pos_hint: {'center_y': 0.32, 'center_x': 0.5}
+
+			
+<MenuScreen>
+	BoxLayout:
+		orientation: 'vertical'
+		FloatLayout:
+			canvas:
+				Color:
+					rgb: 0.9411764,1,1   #RGB: 240,255,255
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			Image:
+				source: 'turkce_bunny_white_crop.png'
+				size_hint: 1,1
+				pos_hint: {'center_y': 0.5, 'center_x': 0.1}
+			Label:
+				font_name: 'fonts/kurale-regular.otf'
+				font_size: 42
+				color: 0.3118,0.4118,0.2118,1
+				text: 'Ho\u015Fgeldiniz!'
+				pos_hint: {'center_y': 0.44, 'center_x': 0.6}
+				
+		FloatLayout:
+			size_hint: 1,0.6
+			canvas:
+				Color:
+					rgb: 145/255,210/255,205/255
+				Rectangle:
+					size: self.size
+					pos: self.pos
+				Color:
+					rgb: 0.17,0.17,0.17
+				RoundedRectangle:
+					size: self.width*0.8,self.height*0.9
+					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.9/2				
+					radius: [20,]
+				Color:
+					rgba: root.learn_bg_r,root.learn_bg_b,root.learn_bg_g,1
+				RoundedRectangle:
+					size: self.width*0.75,self.height*0.7
+					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.7/2				
+					radius: [13,]
+
+			Button:
+				id: learn_button
+				font_name: 'fonts/kurale-regular.otf'
+				font_size: 32
+				size_hint: .6,.6
+				pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+				text: 'Learn'
+				always_release: True
+				background_normal: ''
+				background_color: 0.3,0.3,0.3,1
+				background_down: ''
+				on_press:
+					root.learn_button_press()
+				on_release: 
+					root.manager.transition = SlideTransition(direction='left')
+					root.manager.current = 'temp'
+					root.learn_button_release()
+					
+		FloatLayout:
+			size_hint: 1,0.6
+			canvas:
+				Color:
+					rgb: 145/255,210/255,205/255
+				Rectangle:
+					size: self.size
+					pos: self.pos
+				Color:
+					rgb: 0.17,0.17,0.17
+				RoundedRectangle:
+					size: self.width*0.8,self.height*0.9
+					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.9/2				
+					radius: [20,]
+				Color:
+					rgba: root.practice_bg_r,root.practice_bg_b,root.practice_bg_g,1
+				RoundedRectangle:
+					size: self.width*0.75,self.height*0.7
+					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.7/2				
+					radius: [13,]
+
+			Button:
+				id: practice_button
+				font_name: 'fonts/kurale-regular.otf'
+				font_size: 32
+				size_hint: .6,.6
+				pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+				text: 'Practice'
+				always_release: True
+				background_normal: ''
+				background_color: 0.3,0.3,0.3,1
+				background_down: ''
+				on_press:
+					root.practice_button_press()
+				on_release: 
+					root.manager.transition = SlideTransition(direction='left')
+					root.manager.current = 'practice'
+					root.practice_button_release()
+
+		FloatLayout:
+			size_hint: 1,0.6
+			canvas:
+				Color:
+					rgb: 145/255,210/255,205/255
+				Rectangle:
+					size: self.size
+					pos: self.pos
+				Color:
+					rgb: 0.17,0.17,0.17
+				RoundedRectangle:
+					size: self.width*0.8,self.height*0.9
+					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.9/2				
+					radius: [20,]
+				Color:
+					rgba: root.takeTest_bg_r,root.takeTest_bg_b,root.takeTest_bg_g,1
+				RoundedRectangle:
+					size: self.width*0.75,self.height*0.7
+					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.7/2				
+					radius: [13,]
+
+			Button:
+				id: takeTest_button
+				font_name: 'fonts/kurale-regular.otf'
+				font_size: 32
+				size_hint: .6,.6
+				pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+				text: 'Take a Test'
+				always_release: True
+				background_normal: ''
+				background_color: 0.3,0.3,0.3,1
+				background_down: ''
+				on_press:
+					root.takeTest_button_press()
+				on_release: 
+					root.manager.transition = SlideTransition(direction='left')
+					root.manager.current = 'temp'
+					root.takeTest_button_release()
+
+		FloatLayout:
+			size_hint: 1,0.6
+			canvas:
+				Color:
+					rgb: 145/255,210/255,205/255
+				Rectangle:
+					size: self.size
+					pos: self.pos
+				Color:
+					rgb: 0.17,0.17,0.17
+				RoundedRectangle:
+					size: self.width*0.8,self.height*0.9
+					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.9/2				
+					radius: [20,]
+				Color:
+					rgba: root.extras_bg_r,root.extras_bg_b,root.extras_bg_g,1
+				RoundedRectangle:
+					size: self.width*0.75,self.height*0.7
+					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.7/2				
+					radius: [13,]
+
+			Button:
+				id: extras_button
+				font_name: 'fonts/kurale-regular.otf'
+				font_size: 32
+				size_hint: .6,.6
+				pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+				text: 'Extras'
+				always_release: True
+				background_normal: ''
+				background_color: 0.3,0.3,0.3,1
+				background_down: ''
+				on_press:
+					root.extras_button_press()
+				on_release: 
+					root.manager.transition = SlideTransition(direction='left')
+					root.manager.current = 'temp'
+					root.extras_button_release()					
+
+		FloatLayout:
+			canvas:
+				Color:
+					rgb: 145/255,210/255,205/255
+				Rectangle:
+					pos: self.pos
+					size: self.size
+				Color:
+					rgb: 0.9411764,1,1  #RGB: 240,255,255
+				RoundedRectangle:
+					size: self.width*0.6,self.height*0.5
+					pos: self.width*((1-0.6)/2),self.center_y-self.height*0.5/2				
+					radius: [5,]
+			Label:
+				font_name: 'fonts/kurale-regular.otf'
+				font_size: 20
+				text: 'Merhaba Pelin!'
+				color: 0,0,0,1
+				pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+			
+				
+<TempScreen>:
+	FloatLayout:
+		canvas:
+			Color:
+				rgba: 0,0,0,1   #RGB: 237,27,36
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		Button:
+			font_name: 'fonts/kurale-regular.otf'
+			font_size: 25
+			text: 'Go back'
+			on_press: 
+				root.manager.transition = SlideTransition(direction='right')
+				root.manager.current = 'menu'
+			size_hint_y: 0.2
+			size_hint_x: 0.6
+			pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+		Label:
+			font_name: 'fonts/kurale-regular.otf'
+			font_size: 30
+			color: 1,1,1,1
+			text: 'Under Construction'
+			pos_hint: {'center_y': 0.75, 'center_x': 0.5}			
+
+<PracticeScreen>:			
+	FloatLayout:
+		canvas:
+			Color:
+				rgba: 0,0,0,1   #RGB: 237,27,36
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		Button:
+			font_name: 'fonts/kurale-regular.otf'
+			font_size: 25			
+			text: root.testString
+			on_press: 
+				root.manager.transition = SlideTransition(direction='right')
+				root.manager.current = 'menu'
+			size_hint_y: 0.2
+			size_hint_x: 0.6
+			pos_hint: {'center_y': 0.5, 'center_x': 0.5}
+		Label:
+			font_name: 'fonts/kurale-regular.otf'
+			font_size: 30
+			color: 1,1,1,1
+			text: 'Under Construction'
+			pos_hint: {'center_y': 0.75, 'center_x': 0.5}	
+
+			
+<MyScreenManager>:
+    SplashScreen:
+		name: 'splash'
+    MenuScreen:
+		name: 'menu'
+	TempScreen:
+		name: 'temp'
+	PracticeScreen:
+		name: 'practice'
+		
+		
+		
