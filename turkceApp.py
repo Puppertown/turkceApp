@@ -17,6 +17,9 @@ from kivy.config import Config
 from kivy.clock import Clock
 from kivy.uix.widget import Widget
 
+from kivy.animation import Animation
+from kivy.uix.label import Label
+
 import sqlite3 as sq
 
 import random
@@ -141,12 +144,18 @@ class TempScreen(Screen):
 
 class PracticeScreen(Screen):
 
+    question_type_label = StringProperty()
+
     question = StringProperty()
     answer_r = StringProperty()
     answer_w1 = StringProperty()
     answer_w2 = StringProperty()
     answer_w3 = StringProperty()
 
+    button_location_1 = NumericProperty()
+    button_location_2 = NumericProperty()
+    button_location_3 = NumericProperty()
+    button_location_4 = NumericProperty()
 
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
@@ -162,12 +171,33 @@ class PracticeScreen(Screen):
 
         self.get_question_answers()
 
-    def answer_button_press(self):
+    def answer_button_press(self,button_id):
+        if 'right' in button_id:
+            self.ids[button_id].background_color = 0.3,0.7,0.3,1
+        elif 'wrong' in button_id:
+            self.ids[button_id].background_color = 0.7,0.3,0.3,1
+            self.ids['answer_right'].background_color = 0.3,0.7,0.3,1
         
+        animation = Animation(pos=(100, 100), t='out_bounce')
+        animation += Animation(pos=(200, 100), t='out_bounce')
+        animation &= Animation(size=(500, 500))
+        animation += Animation(size=(100, 50))
 
+        self.testLabel = Label(text='Hello world')
+        self.add_widget(self.testLabel)
+        animation.start(self.testLabel)
 
     def get_question_answers(self):
 
+        # decide if translating English-to-Turkish or Turkish-to-English
+        if random.random() < .5:
+            self.question_from = 'TURKISH'
+            self.question_to = 'ENGLISH'
+            self.question_type_label = 'Translate into English:'
+        else:
+            self.question_from = 'ENGLISH'
+            self.question_to = 'TURKISH'
+            self.question_type_label = 'Translate into Turkish:'
         # select an ID for a question
         question_ID = random.choice(self.ID_full_range)
         # remove that ID from future selection
@@ -184,40 +214,40 @@ class PracticeScreen(Screen):
             adjusted_range.remove(cur_wrong_ID)
 
         # button y-locations
-        button_locations = [0.1,0.3,0.5,0.7]
+        button_locations = [0.25,0.4,0.55,0.7]
         
         # get and set question text
-        self.cursor.execute("SELECT TURKISH FROM TURK_ENG WHERE ID = ?",(question_ID,))
+        self.cursor.execute("SELECT "+self.question_from+" FROM TURK_ENG WHERE ID = ?",(question_ID,))
         for row in self.cursor:
             self.question = row[0]
 
         # get and set right answer text
-        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(answer_right_ID,))
+        self.cursor.execute("SELECT "+self.question_to+" FROM TURK_ENG WHERE ID = ?",(answer_right_ID,))
         for row in self.cursor:
             self.answer_r = row[0]
-        button_location_1 = random.choice(button_locations)
-        button_locations.remove(button_location_1)
+        self.button_location_1 = random.choice(button_locations)
+        button_locations.remove(self.button_location_1)
 
         # get and set right answer text
-        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[0],))
+        self.cursor.execute("SELECT "+self.question_to+" FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[0],))
         for row in self.cursor:
             self.answer_w1 = row[0]
-        button_location_2 = random.choice(button_locations)
-        button_locations.remove(button_location_2)
+        self.button_location_2 = random.choice(button_locations)
+        button_locations.remove(self.button_location_2)
 
         # get and set right answer text
-        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[1],))
+        self.cursor.execute("SELECT "+self.question_to+" FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[1],))
         for row in self.cursor:
             self.answer_w2 = row[0]
-        button_location_3 = random.choice(button_locations)
-        button_locations.remove(button_location_3)
+        self.button_location_3 = random.choice(button_locations)
+        button_locations.remove(self.button_location_3)
 
         # get and set right answer text
-        self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[2],))
+        self.cursor.execute("SELECT "+self.question_to+" FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[2],))
         for row in self.cursor:
             self.answer_w3 = row[0]
-        button_location_4 = random.choice(button_locations)
-        button_locations.remove(button_location_4)
+        self.button_location_4 = random.choice(button_locations)
+        button_locations.remove(self.button_location_4)
 
 
 
