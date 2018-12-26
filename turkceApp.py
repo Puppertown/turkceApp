@@ -178,14 +178,22 @@ class PracticeScreen(Screen):
             self.ids[button_id].background_color = 0.7,0.3,0.3,1
             self.ids['answer_right'].background_color = 0.3,0.7,0.3,1
         
-        animation = Animation(pos=(100, 100), t='out_bounce')
-        animation += Animation(pos=(200, 100), t='out_bounce')
-        animation &= Animation(size=(500, 500))
-        animation += Animation(size=(100, 50))
+        #animation = Animation(pos=(100, 100), t='out_bounce')
+        #animation += Animation(pos=(200, 100), t='out_bounce')
+        #animation &= Animation(size=(500, 500))
+        #animation += Animation(size=(100, 50))
 
-        self.testLabel = Label(text='Hello world')
-        self.add_widget(self.testLabel)
-        animation.start(self.testLabel)
+        #self.testLabel = Label(text='Hello world')
+        #self.add_widget(self.testLabel)
+        #animation.start(self.testLabel)
+
+        aaT = TestWidget()
+        #self.add_widget(aaT)
+
+        self.ids['pscreen_flayout'].add_widget(aaT)
+
+
+
 
     def get_question_answers(self):
 
@@ -250,7 +258,8 @@ class PracticeScreen(Screen):
         button_locations.remove(self.button_location_4)
 
 
-
+class TestWidget(Widget):
+    pass
     
     
 if __name__ == '__main__':
