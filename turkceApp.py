@@ -57,6 +57,7 @@ class MenuScreen(Screen):
     extras_bg_g = NumericProperty(0.3)
         
     def learn_button_press(self):
+        sm.add_widget()
         self.ids['learn_button'].background_color = 0.9294117,0.105882,0.14117647,1
         self.learn_bg_r = 0.9294117
         self.learn_bg_b = 0.105882
@@ -73,6 +74,8 @@ class MenuScreen(Screen):
         self.practice_bg_r = 0.9294117
         self.practice_bg_b = 0.105882
         self.practice_bg_g = 0.14117647
+
+        sm.add_widget(PracticeScreen(name='practice'))
     
     def practice_button_release(self):
         self.ids['practice_button'].background_color = 0.3,0.3,0.3,1
@@ -141,7 +144,8 @@ class PracticeScreen(Screen):
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
     
-        self.conn = sq.connect(r'C:\Users\CrunchyTiger\Desktop\kivy\Türkçe_Tavşanı\turkceApp\database\turk_eng_db.sqlite')
+        #self.conn = sq.connect(r'C:\Users\CrunchyTiger\Desktop\kivy\Türkçe_Tavşanı\turkceApp\database\turk_eng_db.sqlite')
+        self.conn = sq.connect(r'turkceApp\database\turk_eng_db.sqlite')
 
         self.cursor = self.conn.cursor()
 
@@ -150,6 +154,14 @@ class PracticeScreen(Screen):
         self.ID_full_range = list(range(1,self.cursor.fetchone()[0]+1))
 
         self.get_question_answers()
+
+
+    def removeTest(self):
+        print(sm.has_screen('practice'))
+        print(sm.screen_names)
+        sm.switch_to(MenuScreen(name='menu'))
+        print(sm.has_screen('practice'))
+        print(sm.screen_names)
 
 
     def get_question_answers(self):
@@ -168,6 +180,9 @@ class PracticeScreen(Screen):
             cur_wrong_ID = random.choice(adjusted_range)
             wrong_answers_IDs.append(cur_wrong_ID)
             adjusted_range.remove(cur_wrong_ID)
+
+        # button y-locations
+        button_locations = [0.1,0.3,0.5,0.7]
         
         # get and set question text
         self.cursor.execute("SELECT TURKISH FROM TURK_ENG WHERE ID = ?",(question_ID,))
@@ -178,21 +193,29 @@ class PracticeScreen(Screen):
         self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(answer_right_ID,))
         for row in self.cursor:
             self.answer_r = row[0]
+        button_location_1 = random.choice(button_locations)
+        button_locations.remove(button_location_1)
 
         # get and set right answer text
         self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[0],))
         for row in self.cursor:
             self.answer_w1 = row[0]
+        button_location_2 = random.choice(button_locations)
+        button_locations.remove(button_location_2)
 
         # get and set right answer text
         self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[1],))
         for row in self.cursor:
             self.answer_w2 = row[0]
+        button_location_3 = random.choice(button_locations)
+        button_locations.remove(button_location_3)
 
         # get and set right answer text
         self.cursor.execute("SELECT ENGLISH FROM TURK_ENG WHERE ID = ?",(wrong_answers_IDs[2],))
         for row in self.cursor:
             self.answer_w3 = row[0]
+        button_location_4 = random.choice(button_locations)
+        button_locations.remove(button_location_4)
 
 
 
