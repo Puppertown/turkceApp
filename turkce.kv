@@ -258,45 +258,49 @@
 			text: root.question
 			pos_hint: {'center_y': 0.85, 'center_x': 0.5}	
 		Button:
+			id: answer_right
 			font_name: 'fonts/kurale-regular.otf'
 			font_size: 25			
 			text: root.answer_r
 			on_press: 
+				root.answer_button_press('answer_right')
 				root.manager.transition = SlideTransition(direction='right')
-				#root.manager.current = 'menu'
-				#root.manager.switch_to = 'menu'
-				#root.manager.remove_widget(PracticeScreen)
-			size_hint_y: 0.2
+				root.manager.current = 'menu'
+			on_release:
+			size_hint_y: 0.1
 			size_hint_x: 0.6
 			pos_hint: {'center_y': 0.7, 'center_x': 0.5}
 		Button:
+			id: answer_wrong1
 			font_name: 'fonts/kurale-regular.otf'
 			font_size: 25			
 			text: root.answer_w1
 			on_press: 
 				root.manager.transition = SlideTransition(direction='right')
 				root.manager.current = 'menu'
-			size_hint_y: 0.2
+			size_hint_y: 0.1
 			size_hint_x: 0.6
 			pos_hint: {'center_y': 0.5, 'center_x': 0.5}
 		Button:
+			id: answer_wrong2
 			font_name: 'fonts/kurale-regular.otf'
 			font_size: 25			
 			text: root.answer_w2
 			on_press: 
 				root.manager.transition = SlideTransition(direction='right')
 				root.manager.current = 'menu'
-			size_hint_y: 0.2
+			size_hint_y: 0.1
 			size_hint_x: 0.6
 			pos_hint: {'center_y': 0.3, 'center_x': 0.5}
 		Button:
+			id: answer_wrong3
 			font_name: 'fonts/kurale-regular.otf'
 			font_size: 25			
 			text: root.answer_w3
 			on_press: 
 				root.manager.transition = SlideTransition(direction='right')
 				root.manager.current = 'menu'
-			size_hint_y: 0.2
+			size_hint_y: 0.1
 			size_hint_x: 0.6
 			pos_hint: {'center_y': 0.1, 'center_x': 0.5}
 

@@ -57,7 +57,6 @@ class MenuScreen(Screen):
     extras_bg_g = NumericProperty(0.3)
         
     def learn_button_press(self):
-        sm.add_widget()
         self.ids['learn_button'].background_color = 0.9294117,0.105882,0.14117647,1
         self.learn_bg_r = 0.9294117
         self.learn_bg_b = 0.105882
@@ -75,7 +74,11 @@ class MenuScreen(Screen):
         self.practice_bg_b = 0.105882
         self.practice_bg_g = 0.14117647
 
-        sm.add_widget(PracticeScreen(name='practice'))
+        print(sm.screen_names)
+        self.pscreen1 = PracticeScreen(name='practice')
+        sm.add_widget(self.pscreen1)
+        print(sm.screen_names)
+
     
     def practice_button_release(self):
         self.ids['practice_button'].background_color = 0.3,0.3,0.3,1
@@ -94,6 +97,9 @@ class MenuScreen(Screen):
         self.takeTest_bg_r = 0.3
         self.takeTest_bg_b = 0.3
         self.takeTest_bg_g = 0.3
+
+        print(sm.has_screen('practice'))
+        print(sm.screen_names)
         
     def extras_button_press(self):
         self.ids['extras_button'].background_color = 0.9294117,0.105882,0.14117647,1
@@ -107,7 +113,8 @@ class MenuScreen(Screen):
         self.extras_bg_b = 0.3
         self.extras_bg_g = 0.3
     
-
+        sm.remove_widget(self.pscreen1)
+        print(sm.screen_names)
 
        
         
@@ -145,7 +152,7 @@ class PracticeScreen(Screen):
         super(Screen,self).__init__(**kwargs) 
     
         #self.conn = sq.connect(r'C:\Users\CrunchyTiger\Desktop\kivy\Türkçe_Tavşanı\turkceApp\database\turk_eng_db.sqlite')
-        self.conn = sq.connect(r'turkceApp\database\turk_eng_db.sqlite')
+        self.conn = sq.connect(r'database\turk_eng_db.sqlite')
 
         self.cursor = self.conn.cursor()
 
@@ -155,13 +162,8 @@ class PracticeScreen(Screen):
 
         self.get_question_answers()
 
-
-    def removeTest(self):
-        print(sm.has_screen('practice'))
-        print(sm.screen_names)
-        sm.switch_to(MenuScreen(name='menu'))
-        print(sm.has_screen('practice'))
-        print(sm.screen_names)
+    def answer_button_press(self):
+        
 
 
     def get_question_answers(self):
