@@ -11,6 +11,7 @@ kivy.require('1.10.1')
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, FallOutTransition
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import NumericProperty
 from kivy.properties import StringProperty
 from kivy.config import Config
@@ -33,7 +34,7 @@ class SplashScreen(Screen):
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
     
-        Clock.schedule_once(self.menuScreen2, 5)
+        Clock.schedule_once(self.menuScreen2, 0.5)
         
     def menuScreen2(self,dt):
         sm.transition = FallOutTransition()
@@ -100,9 +101,6 @@ class MenuScreen(Screen):
         self.takeTest_bg_r = 0.3
         self.takeTest_bg_b = 0.3
         self.takeTest_bg_g = 0.3
-
-        print(sm.has_screen('practice'))
-        print(sm.screen_names)
         
     def extras_button_press(self):
         self.ids['extras_button'].background_color = 0.9294117,0.105882,0.14117647,1
@@ -157,6 +155,22 @@ class PracticeScreen(Screen):
     button_location_3 = NumericProperty()
     button_location_4 = NumericProperty()
 
+    right_bg_r = NumericProperty(0.3)
+    right_bg_b = NumericProperty(0.3)
+    right_bg_g = NumericProperty(0.3)
+
+    wrong1_bg_r = NumericProperty(0.3)
+    wrong1_bg_b = NumericProperty(0.3)
+    wrong1_bg_g = NumericProperty(0.3)
+
+    wrong2_bg_r = NumericProperty(0.3)
+    wrong2_bg_b = NumericProperty(0.3)
+    wrong2_bg_g = NumericProperty(0.3)
+
+    wrong3_bg_r = NumericProperty(0.3)
+    wrong3_bg_b = NumericProperty(0.3)
+    wrong3_bg_g = NumericProperty(0.3)
+
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
     
@@ -174,9 +188,42 @@ class PracticeScreen(Screen):
     def answer_button_press(self,button_id):
         if 'right' in button_id:
             self.ids[button_id].background_color = 0.3,0.7,0.3,1
+            self.right_bg_r = 0.3
+            self.right_bg_g = 0.7
+            self.right_bg_b = 0.3
+
+            next_Q_widget = TestWidget()
+            next_Q_widget.ans_string = 'Correct!'
+            next_Q_widget.widget_bg_r = 0.3
+            next_Q_widget.widget_bg_g = 0.7
+            next_Q_widget.widget_bg_b = 0.3
+            self.add_widget(next_Q_widget)
+
         elif 'wrong' in button_id:
             self.ids[button_id].background_color = 0.7,0.3,0.3,1
             self.ids['answer_right'].background_color = 0.3,0.7,0.3,1
+            self.right_bg_r = 0.3
+            self.right_bg_g = 0.7
+            self.right_bg_b = 0.3
+            if '1' in button_id:
+                self.wrong1_bg_r = 0.7
+                self.wrong1_bg_b = 0.3
+                self.wrong1_bg_g = 0.3
+            elif '2' in button_id:
+                self.wrong2_bg_r = 0.7
+                self.wrong2_bg_b = 0.3
+                self.wrong2_bg_g = 0.3  
+            elif '3' in button_id:
+                self.wrong3_bg_r = 0.7
+                self.wrong3_bg_b = 0.3
+                self.wrong3_bg_g = 0.3  
+
+            next_Q_widget = TestWidget()
+            next_Q_widget.ans_string = 'Sorry, incorrect'
+            next_Q_widget.widget_bg_r = 0.7
+            next_Q_widget.widget_bg_g = 0.3
+            next_Q_widget.widget_bg_b = 0.3
+            self.add_widget(next_Q_widget)
         
         #animation = Animation(pos=(100, 100), t='out_bounce')
         #animation += Animation(pos=(200, 100), t='out_bounce')
@@ -187,10 +234,7 @@ class PracticeScreen(Screen):
         #self.add_widget(self.testLabel)
         #animation.start(self.testLabel)
 
-        aaT = TestWidget()
-        #self.add_widget(aaT)
 
-        self.ids['pscreen_flayout'].add_widget(aaT)
 
 
 
@@ -222,7 +266,7 @@ class PracticeScreen(Screen):
             adjusted_range.remove(cur_wrong_ID)
 
         # button y-locations
-        button_locations = [0.25,0.4,0.55,0.7]
+        button_locations = [0.325,0.45,0.575,0.7]
         
         # get and set question text
         self.cursor.execute("SELECT "+self.question_from+" FROM TURK_ENG WHERE ID = ?",(question_ID,))
@@ -258,8 +302,19 @@ class PracticeScreen(Screen):
         button_locations.remove(self.button_location_4)
 
 
-class TestWidget(Widget):
-    pass
+class TestWidget(FloatLayout):
+    
+    ans_string = StringProperty('')
+
+    widget_bg_r = NumericProperty(0.3)
+    widget_bg_b = NumericProperty(0.3)
+    widget_bg_g = NumericProperty(0.3)
+
+    def press_next(self):
+        print(self.ans_string)
+        newQuestion = PracticeScreen()
+        sm.switch_to(newQuestion)
+        print(sm.screen_names)
     
     
 if __name__ == '__main__':
