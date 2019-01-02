@@ -323,6 +323,9 @@ class Practice_NextQWidget(FloatLayout):
     widget_bg_b = NumericProperty(0.3)
     widget_bg_g = NumericProperty(0.3)
 
+    border_width = NumericProperty(0.96)
+    border_height = NumericProperty(0.90)
+
     def press_next(self):
         print(self.ans_string)
         newQuestion = PracticeScreen()
