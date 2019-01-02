@@ -1,0 +1,1 @@
+print([0.3250+i*0.125 for i in range(4)])

@@ -9,7 +9,7 @@ import kivy
 kivy.require('1.10.1')
 
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, FallOutTransition
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, FallOutTransition, SlideTransition
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import NumericProperty
@@ -78,10 +78,8 @@ class MenuScreen(Screen):
         self.practice_bg_b = 0.105882
         self.practice_bg_g = 0.14117647
 
-        print(sm.screen_names)
         self.pscreen1 = PracticeScreen(name='practice')
         sm.add_widget(self.pscreen1)
-        print(sm.screen_names)
 
     
     def practice_button_release(self):
@@ -113,9 +111,11 @@ class MenuScreen(Screen):
         self.extras_bg_r = 0.3
         self.extras_bg_b = 0.3
         self.extras_bg_g = 0.3
+        extraBunnies = ExtrasScreen(name='extras')
+        sm.add_widget(extraBunnies)
+        sm.transition = SlideTransition(direction='left')
+        sm.current = 'extras'
     
-        sm.remove_widget(self.pscreen1)
-        print(sm.screen_names)
 
        
         
@@ -143,6 +143,8 @@ class TempScreen(Screen):
 class PracticeScreen(Screen):
 
     question_type_label = StringProperty()
+
+    back_button_image = StringProperty('arrow_left_green.png')
 
     question = StringProperty()
     answer_r = StringProperty()
@@ -174,8 +176,8 @@ class PracticeScreen(Screen):
     title_outerRect_width = NumericProperty(0.88)
     title_innerRect_width = NumericProperty(0.85)
 
-    title_height = NumericProperty(0.20)
-    title_position = NumericProperty(0.78)
+    title_height = NumericProperty(0.16)
+    title_position = NumericProperty(0.755)
     title_border_ratio = NumericProperty(0.91)
 
     answer_outerRect_width = NumericProperty(0.78)
@@ -197,6 +199,20 @@ class PracticeScreen(Screen):
         self.ID_full_range = list(range(1,self.cursor.fetchone()[0]+1))
 
         self.get_question_answers()
+
+    def back_button_press(self):
+        self.back_button_image = 'arrow_left_red.png'
+
+    def back_button_release(self):
+        sm.transition = SlideTransition(direction='right')
+        sm.current = 'menu'
+        if 'nextQ1' in sm.screen_names:
+            previousScreen = sm.get_screen('nextQ1')
+        elif 'nextQ2' in sm.screen_names:
+            previousScreen = sm.get_screen('nextQ2')
+        elif 'practice' in sm.screen_names:
+            previousScreen = sm.get_screen('practice')
+        sm.remove_widget(previousScreen)
 
     def answer_button_press(self,button_id):
         if 'right' in button_id:
@@ -279,7 +295,7 @@ class PracticeScreen(Screen):
             adjusted_range.remove(cur_wrong_ID)
 
         # button y-locations
-        button_locations = [0.325,0.45,0.575,0.7]
+        button_locations = [0.67-i*0.115 for i in range(4)]
         
         # get and set question text
         self.cursor.execute("SELECT "+self.question_from+" FROM TURK_ENG WHERE ID = ?",(question_ID,))
@@ -327,11 +343,39 @@ class Practice_NextQWidget(FloatLayout):
     border_height = NumericProperty(0.90)
 
     def press_next(self):
-        print(self.ans_string)
-        newQuestion = PracticeScreen()
-        sm.switch_to(newQuestion)
-        print(sm.screen_names)
+
+        if 'nextQ1' in sm.screen_names:
+            previousQ = sm.get_screen('nextQ1')
+            self.newQuestion2 = PracticeScreen(name='nextQ2')
+            sm.add_widget(self.newQuestion2)
+            sm.current = 'nextQ2'
+            sm.remove_widget(previousQ)
+
+        elif 'nextQ2' in sm.screen_names:
+            previousQ = sm.get_screen('nextQ2')
+            self.newQuestion1 = PracticeScreen(name='nextQ1')
+            sm.add_widget(self.newQuestion1)
+            sm.current = 'nextQ1'
+            sm.remove_widget(previousQ)
+
+        else:
+            previousQ = sm.get_screen('practice')
+            self.newQuestion1 = PracticeScreen(name='nextQ1')
+            sm.add_widget(self.newQuestion1)
+            sm.current = 'nextQ1'
+            sm.remove_widget(previousQ)
     
+
+class ExtrasScreen(Screen):
+    
+    def pressBunnies(self):
+        sm.transition = SlideTransition(direction='right')
+        sm.current = 'menu'
+        bunniesScreen = sm.get_screen('extras')
+        sm.remove_widget(bunniesScreen)
+
+
+
     
 if __name__ == '__main__':
     TurkceApp().run()
