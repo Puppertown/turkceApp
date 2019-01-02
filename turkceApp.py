@@ -171,6 +171,19 @@ class PracticeScreen(Screen):
     wrong3_bg_b = NumericProperty(0.3)
     wrong3_bg_g = NumericProperty(0.3)
 
+    title_outerRect_width = NumericProperty(0.88)
+    title_innerRect_width = NumericProperty(0.85)
+
+    title_height = NumericProperty(0.20)
+    title_position = NumericProperty(0.78)
+    title_border_ratio = NumericProperty(0.91)
+
+    answer_outerRect_width = NumericProperty(0.78)
+    answer_innerRect_width = NumericProperty(0.75)
+    answer_outerRect_height = NumericProperty(0.73)
+    answer_innerRect_height = NumericProperty(0.58)
+    answer_inner_radius = NumericProperty(15)
+
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
     
@@ -192,7 +205,7 @@ class PracticeScreen(Screen):
             self.right_bg_g = 0.7
             self.right_bg_b = 0.3
 
-            next_Q_widget = TestWidget()
+            next_Q_widget = Practice_NextQWidget()
             next_Q_widget.ans_string = 'Correct!'
             next_Q_widget.widget_bg_r = 0.3
             next_Q_widget.widget_bg_g = 0.7
@@ -218,7 +231,7 @@ class PracticeScreen(Screen):
                 self.wrong3_bg_b = 0.3
                 self.wrong3_bg_g = 0.3  
 
-            next_Q_widget = TestWidget()
+            next_Q_widget = Practice_NextQWidget()
             next_Q_widget.ans_string = 'Sorry, incorrect'
             next_Q_widget.widget_bg_r = 0.7
             next_Q_widget.widget_bg_g = 0.3
@@ -302,7 +315,7 @@ class PracticeScreen(Screen):
         button_locations.remove(self.button_location_4)
 
 
-class TestWidget(FloatLayout):
+class Practice_NextQWidget(FloatLayout):
     
     ans_string = StringProperty('')
 

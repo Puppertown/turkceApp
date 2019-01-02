@@ -255,15 +255,15 @@
 			Color:
 				rgb: 0.17,0.17,0.17
 			RoundedRectangle:
-				size: self.width*0.9,self.height*0.20
-				pos: self.width*((1-0.9)/2),self.center_y+self.height*0.28			
+				size: self.width*root.title_outerRect_width,self.height*root.title_height/root.title_border_ratio
+				pos: self.width*((1-root.title_outerRect_width)/2),self.height*root.title_position-(self.height*root.title_height/root.title_border_ratio-self.height*root.title_height)/2
 				radius: [8,]
 			# title inner rectangle
 			Color:
 				rgb: 0.3,0.3,0.3
 			RoundedRectangle:
-				size: self.width*0.85,self.height*0.17
-				pos: self.width*((1-0.85)/2),self.center_y+self.height*0.295
+				size: self.width*root.title_innerRect_width,self.height*root.title_height
+				pos: self.width*((1-root.title_innerRect_width)/2),self.height*root.title_position
 				radius: [5,]
 		# Title labels
 		Label:
@@ -291,15 +291,15 @@
 				Color:
 					rgb: 0.17,0.17,0.17
 				RoundedRectangle:
-					size: self.width*0.8,self.height*0.8
-					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.8/2				
+					size: self.width*root.answer_outerRect_width,self.height*root.answer_outerRect_height
+					pos: self.width*((1-root.answer_outerRect_width)/2),self.center_y-self.height*root.answer_outerRect_height/2				
 					radius: [20,]
 				Color:
 					rgb:  root.right_bg_r,root.right_bg_g,root.right_bg_b
 				RoundedRectangle:
-					size: self.width*0.75,self.height*0.58
-					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.58/2				
-					radius: [13,]
+					size: self.width*root.answer_innerRect_width,self.height*root.answer_innerRect_height
+					pos: self.width*((1-root.answer_innerRect_width)/2),self.center_y-self.height*root.answer_innerRect_height/2				
+					radius: [root.answer_inner_radius,]
 			Button:
 				id: answer_right
 				font_name: 'fonts/OpenSans-Regular.ttf'
@@ -325,15 +325,15 @@
 				Color:
 					rgb: 0.17,0.17,0.17
 				RoundedRectangle:
-					size: self.width*0.8,self.height*0.8
-					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.8/2				
+					size: self.width*root.answer_outerRect_width,self.height*root.answer_outerRect_height
+					pos: self.width*((1-root.answer_outerRect_width)/2),self.center_y-self.height*root.answer_outerRect_height/2				
 					radius: [20,]
 				Color:
 					rgb:  root.wrong1_bg_r,root.wrong1_bg_g,root.wrong1_bg_b
 				RoundedRectangle:
-					size: self.width*0.75,self.height*0.58
-					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.58/2				
-					radius: [13,]
+					size: self.width*root.answer_innerRect_width,self.height*root.answer_innerRect_height
+					pos: self.width*((1-root.answer_innerRect_width)/2),self.center_y-self.height*root.answer_innerRect_height/2				
+					radius: [root.answer_inner_radius,]
 			Button:
 				id: answer_wrong1
 				font_name: 'fonts/OpenSans-Regular.ttf'
@@ -359,15 +359,15 @@
 				Color:
 					rgb: 0.17,0.17,0.17
 				RoundedRectangle:
-					size: self.width*0.8,self.height*0.8
-					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.8/2				
+					size: self.width*root.answer_outerRect_width,self.height*root.answer_outerRect_height
+					pos: self.width*((1-root.answer_outerRect_width)/2),self.center_y-self.height*root.answer_outerRect_height/2				
 					radius: [20,]
 				Color:
 					rgb:  root.wrong2_bg_r,root.wrong2_bg_g,root.wrong2_bg_b
 				RoundedRectangle:
-					size: self.width*0.75,self.height*0.58
-					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.58/2				
-					radius: [13,]
+					size: self.width*root.answer_innerRect_width,self.height*root.answer_innerRect_height
+					pos: self.width*((1-root.answer_innerRect_width)/2),self.center_y-self.height*root.answer_innerRect_height/2				
+					radius: [root.answer_inner_radius,]
 			Button:
 				id: answer_wrong2
 				font_name: 'fonts/OpenSans-Regular.ttf'
@@ -393,15 +393,15 @@
 				Color:
 					rgb: 0.17,0.17,0.17
 				RoundedRectangle:
-					size: self.width*0.8,self.height*0.8
-					pos: self.width*((1-0.8)/2),self.center_y-self.height*0.8/2				
+					size: self.width*root.answer_outerRect_width,self.height*root.answer_outerRect_height
+					pos: self.width*((1-root.answer_outerRect_width)/2),self.center_y-self.height*root.answer_outerRect_height/2				
 					radius: [20,]
 				Color:
 					rgb:  root.wrong3_bg_r,root.wrong3_bg_g,root.wrong3_bg_b
 				RoundedRectangle:
-					size: self.width*0.75,self.height*0.58
-					pos: self.width*((1-0.75)/2),self.center_y-self.height*0.58/2				
-					radius: [13,]
+					size: self.width*root.answer_innerRect_width,self.height*root.answer_innerRect_height
+					pos: self.width*((1-root.answer_innerRect_width)/2),self.center_y-self.height*root.answer_innerRect_height/2				
+					radius: [root.answer_inner_radius,]
 			Button:
 				id: answer_wrong3
 				font_name: 'fonts/OpenSans-Regular.ttf'
@@ -416,7 +416,7 @@
 				size_hint: 0.7,0.53		
 
 
-<TestWidget>:
+<Practice_NextQWidget>:
 	size_hint: 0.8,0.2
 	pos_hint: {'center_y': 0.15, 'center_x': 0.5}
 	canvas.before:
