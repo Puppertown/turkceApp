@@ -34,7 +34,7 @@ class SplashScreen(Screen):
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
     
-        Clock.schedule_once(self.menuScreen2, 0.5)
+        Clock.schedule_once(self.menuScreen2, 5)
         
     def menuScreen2(self,dt):
         sm.transition = FallOutTransition()
@@ -188,9 +188,11 @@ class PracticeScreen(Screen):
 
     def __init__(self, **kwargs):
         super(Screen,self).__init__(**kwargs) 
-    
-        #self.conn = sq.connect(r'C:\Users\CrunchyTiger\Desktop\kivy\Türkçe_Tavşanı\turkceApp\database\turk_eng_db.sqlite')
-        self.conn = sq.connect(r'database\turk_eng_db.sqlite')
+
+        # for laptop
+        self.conn = sq.connect(r'turkceApp\database\turk_eng_db.sqlite')
+        # for desktop
+        #self.conn = sq.connect(r'database\turk_eng_db.sqlite')
 
         self.cursor = self.conn.cursor()
 
@@ -263,7 +265,7 @@ class PracticeScreen(Screen):
         #self.add_widget(self.testLabel)
         #animation.start(self.testLabel)
 
-
+        # gittttt
 
 
 
